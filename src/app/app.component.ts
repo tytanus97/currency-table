@@ -8,11 +8,4 @@ import { Component } from '@angular/core'
 })
 export class AppComponent {
 	title = ''
-	isLightTheme = false
-
-	constructor(private readonly themeSwitchService: ThemeSwitchService) { }
-
-	changeTheme(value) {
-		this.themeSwitchService.switchTheme(value)
-	}
 }
