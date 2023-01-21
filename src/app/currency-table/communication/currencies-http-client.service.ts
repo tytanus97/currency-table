@@ -1,8 +1,10 @@
+import { VALID_FORMAT_DATE } from './../../auxiliary/date-validator.service'
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { CurrencyTableData } from '../domain/models'
+import * as moment from 'moment'
 
 @Injectable({
 	providedIn: 'root'
@@ -14,13 +16,14 @@ export class CurrenciesHttpClientService {
 	constructor(private readonly httpClient: HttpClient) {
 	}
 
-	getCurrencyData(): Observable<CurrencyTableData> {
+	getCurrencyData(): Promise<CurrencyTableData> {
 		return this.httpClient.get<CurrencyTableData>(`${this._BASE_URL}/exchangerates/tables/A/?format=json`, { observe: 'body' })
-			.pipe(map((body) => body[0]))
+			.pipe(map((body) => body[0])).toPromise()
 	}
 
-	getCurrencyDataByDate(date: Date): Observable<CurrencyTableData> {
-		return this.httpClient.get<CurrencyTableData>(`${this._BASE_URL}/exchangerates/tables/A/${date}/?format=json`, { observe: 'body' })
-			.pipe(map((body) => body[0]))
+	getCurrencyDataByDate(date: Date): Promise<CurrencyTableData> {
+		const formatted = moment(date).format(VALID_FORMAT_DATE)
+		return this.httpClient.get<CurrencyTableData>(`${this._BASE_URL}/exchangerates/tables/A/${formatted}/?format=json`, { observe: 'body' })
+			.pipe(map((body) => body[0])).toPromise()
 	}
 }
