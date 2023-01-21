@@ -1,0 +1,5 @@
+<div class="app-theme-toggle">
+    <h4>Wybierz widok</h4>
+    <p-selectButton [options]="options" [(ngModel)]="isLightTheme" (ngModelChange)="changeTheme($event)"
+        optionLabel="name" optionValue="value"></p-selectButton>
+</div>
