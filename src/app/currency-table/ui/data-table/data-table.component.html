@@ -1,39 +1,61 @@
 <div class="table-wrapper">
 
-    <p-table [value]="currencies" [autoLayout]="true" [resizableColumns]="true" [paginator]="true" [rows]="5"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
-        [rowsPerPageOptions]="[10,25,50]" [globalFilterFields]="['code','currency','mid']">
-        <ng-template pTemplate="header">
-            <tr>
-                <th pSortableColumn="code" class="table-header p-d-flex p-jc-between p-ai-center">
-                    <div class="p-d-flex p-jc-between p-ai-center">
-                        <span>Symbol waluty</span>
-                        <p-sortIcon field="code"></p-sortIcon>
-                        <p-columnFilter type="text" field="code" display="menu"></p-columnFilter>
-                    </div>
-                </th>
-                <th pSortableColumn="currency" class="table-header">
-                    <div class="p-d-flex p-jc-between p-ai-center">
-                        <span>Waluta</span>
-                        <p-sortIcon field="code"></p-sortIcon>
-                        <p-columnFilter type="text" field="currency" display="menu"></p-columnFilter>
-                    </div>
-                </th>
-                <th pSortableColumn="mid" class="table-header p-d-flex p-jc-between p-ai-center">
-                    <div class="p-d-flex p-jc-between p-ai-center">
-                        <span>Kurs waluty</span>
-                        <p-sortIcon field="mid"></p-sortIcon>
-                        <p-columnFilter type="number" field="mid" display="menu"></p-columnFilter>
-                    </div>
-                </th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-currency>
-            <tr>
-                <td>{{currency.code}}</td>
-                <td>{{currency.currency}}</td>
-                <td>{{currency.mid}}</td>
-            </tr>
-        </ng-template>
-    </p-table>
+    <ng-container *ngIf="!errorMessage; else noContent">
+        <p-table #currencyTable [value]="currencies" styleClass="p-datatable-gridlines" [paginator]="true" [rows]="10"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
+            [globalFilterFields]="['code','currency','mid']">
+            <ng-template pTemplate="caption">
+                <app-table-actions (clearFilters)="onClearFilters(currencyTable)"
+                    (dateChanges)="onDateChanged($event)"></app-table-actions>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="code" class="table-header p-d-flex p-jc-between p-ai-center">
+                        <div class="header-container">
+                            <span>Symbol waluty</span>
+                            <div>
+                                <p-sortIcon field="code"></p-sortIcon>
+                                <p-columnFilter type="text" field="code" display="menu"></p-columnFilter>
+                            </div>
+
+                        </div>
+                    </th>
+                    <th pSortableColumn="currency" class="table-header">
+                        <div class="header-container">
+                            <span>Waluta</span>
+                            <div>
+                                <p-sortIcon field="code"></p-sortIcon>
+                                <p-columnFilter type="text" field="currency" display="menu"></p-columnFilter>
+                            </div>
+                        </div>
+                    </th>
+                    <th pSortableColumn="mid" class="table-header p-d-flex p-jc-between p-ai-center">
+                        <div class="header-container">
+                            <span>Kurs waluty</span>
+                            <div>
+                                <p-sortIcon field="mid"></p-sortIcon>
+                                <p-columnFilter type="number" field="mid" display="menu"></p-columnFilter>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-currency>
+                <tr>
+                    <td>{{currency.code}}</td>
+                    <td>{{currency.currency}}</td>
+                    <td>{{currency.mid}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </ng-container>
+
+    <ng-template #noContent>
+        <div class="no-contnet">
+            <h2>{{errorMessage}}</h2>
+            <button pButton type="button" icon="pi pi-refresh" class="p-button-outlined p-button-text"
+                style="margin-top:0.5rem;" (click)="refreshData()"></button>
+        </div>
+    </ng-template>
 </div>
