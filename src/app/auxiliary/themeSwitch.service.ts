@@ -2,8 +2,8 @@ import { Injectable, Renderer2, RendererFactory2 } from '@angular/core'
 
 @Injectable({ providedIn: 'root' })
 export class ThemeSwitchService {
-	private readonly _LIGHT_THEME = 'fluent-light'
-	private readonly _DARK_THEME = 'luna-green'
+	private readonly _LIGHT_THEME = 'light'
+	private readonly _DARK_THEME = 'dark'
 	private _renderer: Renderer2
 
 	constructor(rendererFactory: RendererFactory2) {
