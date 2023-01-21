@@ -1,0 +1,39 @@
+<div class="table-wrapper">
+
+    <p-table [value]="currencies" [autoLayout]="true" [resizableColumns]="true" [paginator]="true" [rows]="5"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10,25,50]" [globalFilterFields]="['code','currency','mid']">
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="code" class="table-header p-d-flex p-jc-between p-ai-center">
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        <span>Symbol waluty</span>
+                        <p-sortIcon field="code"></p-sortIcon>
+                        <p-columnFilter type="text" field="code" display="menu"></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="currency" class="table-header">
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        <span>Waluta</span>
+                        <p-sortIcon field="code"></p-sortIcon>
+                        <p-columnFilter type="text" field="currency" display="menu"></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="mid" class="table-header p-d-flex p-jc-between p-ai-center">
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        <span>Kurs waluty</span>
+                        <p-sortIcon field="mid"></p-sortIcon>
+                        <p-columnFilter type="number" field="mid" display="menu"></p-columnFilter>
+                    </div>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-currency>
+            <tr>
+                <td>{{currency.code}}</td>
+                <td>{{currency.currency}}</td>
+                <td>{{currency.mid}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
