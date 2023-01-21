@@ -1,3 +1,2 @@
-<p-calendar [showIcon]="true" [(ngModel)]="selectedDate" placeholder="Wybierz date" class="ng-invalid ng-dirty"
-    (ngModelChange)="onDateChanged($event)" (blur)="validateDate($event)" inputId="icon"
-    dateFormat="yy.mm.dd"></p-calendar>
+<p-calendar [showIcon]="true" [(ngModel)]="selectedDate" placeholder="Wybierz date" [ngClass]="{'ng-invalid': !isValid}"
+    (ngModelChange)="onDateChanged($event)" inputId="icon" dateFormat="yy.mm.dd" [maxDate]="maxDate"></p-calendar>

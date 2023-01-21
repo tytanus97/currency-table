@@ -1,4 +1,4 @@
 <div class="table-actions-container">
     <app-filter-clear (clearFilters)="clearFilters.emit()"></app-filter-clear>
-    <app-date-selector></app-date-selector>
+    <app-date-selector (dateChanges)="dateChanges.emit($event)"></app-date-selector>
 </div>

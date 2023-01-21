@@ -8,6 +8,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core'
 export class TableActionsComponent implements OnInit {
 
 	@Output() clearFilters = new EventEmitter()
+	@Output() dateChanges = new EventEmitter<Date>()
 
 	selectedDate: Date
 	constructor() { }

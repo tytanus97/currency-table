@@ -1,25 +1,44 @@
-import { Component, OnInit } from '@angular/core'
+import { Subject, Subscription } from 'rxjs'
+import { DateValidatorService, VALID_FORMAT_DATE } from './../../../auxiliary/date-validator.service'
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core'
+import { debounceTime } from 'rxjs/operators'
 
 @Component({
-  selector: 'app-date-selector',
-  templateUrl: './date-selector.component.html',
-  styleUrls: ['./date-selector.component.scss']
+	selector: 'app-date-selector',
+	templateUrl: './date-selector.component.html',
+	styleUrls: ['./date-selector.component.scss']
 })
-export class DateSelectorComponent implements OnInit {
+export class DateSelectorComponent implements OnInit, OnDestroy {
 
-  selectedDate: Date
-  constructor() { }
+	selectedDate: Date
+	isValid = true
+	maxDate: Date
+	private _dateChangedEvent$ = new Subject<Date>()
+	private __dateChangedEventToken: Subscription
 
-  ngOnInit(): void {
-  }
+	@Output() dateChanges = new EventEmitter()
 
-  onDateChanged(date: Date) {
-	console.log('chabged', date)
 
-  }
 
-  validateDate(date) {
-	console.log('on blue', date)
+	constructor(private readonly dateValidatorService: DateValidatorService) { }
 
-  }
+	ngOnDestroy(): void {
+		if (this.__dateChangedEventToken) {
+			this.__dateChangedEventToken.unsubscribe()
+		}
+	}
+
+	ngOnInit(): void {
+		this.maxDate = new Date()
+		this.__dateChangedEventToken = this._dateChangedEvent$.pipe(debounceTime(500)).subscribe(date => {
+			this.dateChanges.emit(date)
+		})
+	}
+
+	onDateChanged(date: Date) {
+		this.isValid = this.dateValidatorService.validateDate(this.selectedDate, VALID_FORMAT_DATE)
+		if (this.isValid) {
+			this._dateChangedEvent$.next(this.selectedDate)
+		}
+	}
 }
