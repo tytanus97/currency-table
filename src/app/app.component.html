@@ -1,10 +1,4 @@
-<div class="app-container p-component">
-  <div class="app-header">
-    <h1>Prime NG theme</h1>
-
-    <div class="app-theme-toggle">
-      <p-toggleButton [(ngModel)]="isLightTheme" (ngModelChange)="changeTheme($event)" onIcon="pi pi-moon"
-        offIcon="pi pi-sun"></p-toggleButton>
-    </div>
-  </div>
+<div class="app-container">
+  <app-data-table></app-data-table>
+  <app-theme-toggle></app-theme-toggle>
 </div>
